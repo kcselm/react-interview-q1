@@ -28,6 +28,10 @@ function App() {
     setFormValues({ ...formValues, location: e.target.value });
   };
 
+  const clearEntries = () => {
+    setRecords([]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validName = await isNameValid(formValues.name);
@@ -62,7 +66,7 @@ function App() {
         <br />
         <br />
         <div className="buttons">
-          <button>Clear</button>
+          <button onClick={clearEntries}>Clear</button>
           <button type="submit">Add</button>
         </div>
       </form>
