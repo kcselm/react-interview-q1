@@ -53,3 +53,12 @@ table {
 tr:nth-child(even) {
   background-color: lightgrey;
 }
+
+.error {
+  color: red;
+}
+
+.buttons {
+  margin-right: 25%;
+  text-align: right;
+}

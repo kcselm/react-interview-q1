@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { getLocations } from "./mock-api/apis";
+import { getLocations, isNameValid } from "./mock-api/apis";
 
 function App() {
   const [formValues, setFormValues] = useState({
@@ -8,6 +8,7 @@ function App() {
     name: "",
     location: "",
   });
+  const [validName, setValidName] = useState(true);
   const [records, setRecords] = useState([]);
   const [locations, setLocations] = useState([]);
 
@@ -27,10 +28,16 @@ function App() {
     setFormValues({ ...formValues, location: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setRecords([...records, formValues]);
-    setFormValues({ id: formValues.id + 1, name: "", location: "" });
+    const validName = await isNameValid(formValues.name);
+    if (validName) {
+      setValidName(true);
+      setRecords([...records, formValues]);
+      setFormValues({ id: formValues.id + 1, name: "", location: "" });
+    } else {
+      setValidName(false);
+    }
   };
   return (
     <div className="App">
@@ -41,6 +48,7 @@ function App() {
           value={formValues.name}
           onChange={handleNameChange}
         ></input>
+        {validName || <div className="error">That's an invalid name</div>}
         <br />
         <label htmlFor="location">Location </label>
         <select name="location" onChange={handleLocationChange}>
@@ -52,15 +60,19 @@ function App() {
           ))}
         </select>
         <br />
-        <button>Clear</button>
-        <button type="submit">Add</button>
+        <br />
+        <div className="buttons">
+          <button>Clear</button>
+          <button type="submit">Add</button>
+        </div>
       </form>
-      <br />
       <br />
       <table>
         <thead>
-          <th>Name </th>
-          <th>Location</th>
+          <tr>
+            <th>Name </th>
+            <th>Location</th>
+          </tr>
         </thead>
         <tbody>
           {records.map((record) => (
