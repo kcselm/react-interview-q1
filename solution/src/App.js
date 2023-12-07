@@ -55,6 +55,22 @@ function App() {
         <button>Clear</button>
         <button type="submit">Add</button>
       </form>
+      <br />
+      <br />
+      <table>
+        <thead>
+          <th>Name </th>
+          <th>Location</th>
+        </thead>
+        <tbody>
+          {records.map((record) => (
+            <tr key={record.id}>
+              <td>{record.name}</td>
+              <td>{record.location}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
