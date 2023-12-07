@@ -3,6 +3,10 @@ import "./App.css";
 import { getLocations, isNameValid } from "./mock-api/apis";
 
 function App() {
+  /**
+   * I wouldn't prefer to set the id on the client. Getting
+   * it from the server would be much better practice
+   */
   const [formValues, setFormValues] = useState({
     id: 1,
     name: "",
@@ -13,6 +17,11 @@ function App() {
   const [locations, setLocations] = useState([]);
 
   useEffect(() => {
+    /**
+     * This isn't accounting for any errors calling the api.
+     * I would choose a more robust solution like react-query
+     * to handle api requests.
+     */
     const fetchLocations = async () => {
       const data = await getLocations();
       setLocations(data);
@@ -43,6 +52,10 @@ function App() {
       setValidName(false);
     }
   };
+  /**
+   * This a lot for one component. If I had more time, I would break the
+   * table and form and maybe inputs into their own components.
+   */
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>
